@@ -1,0 +1,70 @@
+ip access-list extended VLXX0-IN
+ deny   udp any host 10.3.242.95 eq netbios-ns
+ deny   udp any host 10.3.242.95 eq netbios-dgm
+ permit icmp any any
+ permit tcp any any established
+ remark dhcp
+ permit udp any eq bootpc host 255.255.255.255 eq bootps
+ permit udp any eq bootpc 10.3.240.40 0.0.0.1 eq bootps
+ remark web proxy
+ permit tcp 10.3.242.64 0.0.0.31 192.168.127.100 0.0.0.1 eq 8080
+ permit tcp 10.3.242.64 0.0.0.31 192.168.127.100 0.0.0.1 eq 9000
+ permit tcp 10.3.242.64 0.0.0.31 host 192.168.125.21 eq www
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.99 eq www
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.101 eq 9000
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.102 eq 9000
+ remark center and cybozu
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.50 0.0.0.1 eq www
+ remark mail
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq smtp
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq 993
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.100 eq 993
+ permit tcp 10.3.242.64 0.0.0.31 192.168.127.110 0.0.0.1 eq smtp
+ permit tcp 10.3.242.64 0.0.0.31 10.3.241.12 0.0.0.1 eq smtp
+ remark fileserver
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.241.18 eq www
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.241.18 eq 139
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.241.18 eq 445
+ permit udp 10.3.242.64 0.0.0.31 host 10.3.241.18 eq 445
+ permit udp 10.3.242.64 0.0.0.31 host 10.3.241.18 eq netbios-ns
+ permit udp 10.3.242.64 0.0.0.31 host 10.3.241.18 eq netbios-dgm
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq www
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 88
+ permit udp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 88
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 135
+ permit udp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 135
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 137
+ permit udp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq netbios-ns
+ permit udp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq netbios-dgm
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 139
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 445
+ permit udp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 445
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 636
+ permit udp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 636
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 3269
+ permit tcp 10.3.242.64 0.0.0.31 10.3.240.38 0.0.0.1 eq 49152
+ remark samba
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq www
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq 139
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq 445
+ permit udp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq netbios-ns
+ permit udp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq netbios-dgm
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.196 eq www
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.196 eq 139
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.196 eq 445
+ permit udp 10.3.242.64 0.0.0.31 host 10.3.240.196 eq netbios-ns
+ permit udp 10.3.242.64 0.0.0.31 host 10.3.240.196 eq netbios-dgm
+ remark cybozu
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.201 eq www
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.201 eq 443
+ remark domain
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq domain
+ permit udp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq domain
+ remark ntp
+ permit udp 10.3.242.64 0.0.0.31 host 10.3.240.194 eq ntp
+ remark portal
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.199 eq www
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.199 eq 443
+ permit tcp 10.3.242.64 0.0.0.31 host 10.3.240.199 eq 6669
+ deny   ip any any log
+

@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require_relative '../lib/firewall_test_gen'
+
+opts = {}
+OptionParser.new do |each|
+  each.banner = "ruby #{$PROGRAM_NAME} [options] [args]"
+  each.on('-c MODE', '--color', 'enable coloring (MODE=[term, html]') do |x|
+    opts[:color] = x.intern
+  end
+  each.on('-d', '--debug', 'enable debug print') do |x|
+    opts[:debug] = x
+  end
+  each.on('--yydebug', 'enable yydebug') do |x|
+    opts[:yydebug] = x
+  end
+  each.on('-f FILE', '--file', 'acl file') do |x|
+    opts[:file] = x
+  end
+  each.on('-s', '--syntax', 'syntax check') do |x|
+    opts[:syntax] = x
+  end
+
+  begin
+    each.parse!
+  rescue
+    puts 'invalid option.'
+    puts each
+  end
+end
+
+popts = {}
+popts[:color] = opts[:color] || :none
+popts[:debug] = opts[:debug]
+popts[:yydebug] = opts[:yydebug]
+
+acl_file = opts[:file] || $stdin
+
+fwtestgen = FirewallTestGen.new(acl_file, popts)
+if opts[:syntax]
+  # use as ACL syntax checker
+  fwtestgen.print_acl_data
+else
+  # default: generate testcase from ACL
+  fwtestgen.generate_test_patterns
+end
