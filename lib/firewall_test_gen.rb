@@ -39,7 +39,8 @@ class FirewallTestGen
 
   def set_logger
     @logger = Logger.new('firewall_test_gen.log')
-    @logger.level = Logger::DEBUG
+    # @logger.level = Logger::DEBUG
+    @logger.level = Logger::ERROR
     @logger.formatter = proc do |severity, datetime, progname, message|
       "#{datetime}: #{severity}: #{message}\n"
     end
@@ -165,6 +166,12 @@ class FirewallTestGen
       [['192.0.2.1', match]] # TODO
       # if acl at infilter, ANY-IP means any host at inside of interface
       # expected: when src=any/dst=any, 'any' means ANOTHER ip addr
+    elsif ip == '0.0.0.0/32'
+      # see also: http://www.wdic.org/w/WDIC/0.0.0.0
+      # used in DHCP, when ip address request
+      # (when a client doesn't have addr)
+      # it means STRICT '0.0.0.0'.
+      [['0.0.0.0', match]]
     elsif ip == '255.255.255.255/32'
       # ip broadcast
       [['255.255.255.254', not_match],
